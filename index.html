@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIKYA LUXURY PREMIUM</title>
+    <style>
+        :root { --bg: #0d0d12; --card: #161622; --text: #ffffff; --text-gray: #8f92a1; --blue: #4285F4; --red: #ea4335; --green: #2ecc71; --gold: linear-gradient(45deg, #ffe066, #f5b041); }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .logo { font-size: 46px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(to right, #4285F4, #ffe066, #fe0979, #34A853, #4285F4); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 4s linear infinite; }
+        @keyframes shine { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        .premium-badge { display: none; background: var(--gold); color: #000; padding: 5px 15px; font-size: 12px; font-weight: bold; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255,224,102,0.4); }
+        .top-bar { width: 100%; max-width: 650px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .nav-group { display: flex; gap: 8px; }
+        .btn { padding: 10px 18px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; }
+        .btn-blue { background: var(--blue); } .btn-green { background: var(--green); } .btn-red { background: var(--red); } .btn-gray { background: #2c2c3e; }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+        .search-box { width: 100%; max-width: 600px; display: flex; background: var(--card); border: 1px solid #232335; border-radius: 30px; padding: 12px 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 25px; cursor: pointer; }
+        .search-box input { flex: 1; border: none; outline: none; font-size: 16px; background: transparent; color: white; cursor: pointer; }
+        .panel { width: 100%; max-width: 600px; background: var(--card); padding: 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid #232335; margin-bottom: 20px; box-sizing: border-box; }
+        .chat-box { background: rgba(0,0,0,0.2); border: 1px solid #1f1f30; padding: 12px; height: 120px; overflow-y: auto; border-radius: 10px; font-size: 14px; text-align: left; margin-bottom: 12px; color: #e0e0e6; }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; max-width: 600px; margin-bottom: 25px; }
+        .service-card { background: var(--card); border: 1px solid #232335; padding: 15px; border-radius: 12px; text-align: center; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .service-card:hover { transform: translateY(-3px); border-color: var(--blue); }
+        .srv-icon { font-size: 24px; display: block; margin-bottom: 5px; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 999; backdrop-filter: blur(4px); }
+        .modal { background: var(--card); padding: 25px; border-radius: 20px; width: 90%; max-width: 450px; border: 1px solid #232335; position: relative; box-sizing: border-box; text-align: center; }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 26px; cursor: pointer; color: var(--text-gray); }
+        .form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .form input, .form textarea { width: 100%; padding: 11px; border: 1px solid #232335; border-radius: 8px; box-sizing: border-box; outline: none; background: var(--bg); color: white; }
+        
+        /* Иконка Т в стиле Google */
+        .google-t-icon { width: 44px; height: 44px; border-radius: 12px; background: #1e1e2f; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); border: 1px solid #2d2d44; user-select: none; }
+        .google-t-text { background: linear-gradient(135deg, #4285F4 25%, #EA4335 25% 50%, #FBBC05 50% 75%, #34A853 75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Стили дополнительных виджетов */
+        .speed-display { font-size: 32px; font-weight: bold; color: var(--green); margin: 15px 0 5px; }
+        .speed-progress { width: 100%; height: 6px; background: #232335; border-radius: 3px; overflow: hidden; margin-bottom: 15px; display: none; }
+        .speed-bar { width: 0%; height: 100%; background: var(--green); transition: width 0.1s linear; }
+        .checkbox-group { display: flex; flex-direction: column; gap: 8px; text-align: left; margin: 10px 0; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-gray); cursor: pointer; }
+        .checkbox-label input { width: auto; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="google-t-icon"><span class="google-t-text">T</span></div>
+            <div class="logo">TIKYA</div>
+        </div>
+        <div class="nav-group">
+            <button class="btn btn-green" id="regBtn" onclick="openM('regModal')">Регистрация</button>
+            <button class="btn btn-gray" id="logoutBtn" style="display:none;" onclick="logout()">Выйти</button>
+            <button class="btn btn-gray" onclick="openM('settingsModal')">⚙️ Настройки</button>
+            <button class="btn btn-red" onclick="openM('tmailModal')">Tmail</button>
+        </div>
+    </div>
+
+    <div class="premium-badge" id="premiumBadge">✦ TIKYA+ АКТИВИРОВАН ✦</div>
+
+    <div class="search-box" onclick="window.open('https://google.com', '_blank')">
+        <input type="text" placeholder="Нажми для перехода в Google..." readonly>
+        <span style="font-size:18px;">🔍</span>
+    </div>
+
+    <!-- СЕТКА СЕРВИСОВ -->
+    <div class="services-grid">
+        <div class="service-card" onclick="openM('tcloudModal')"><span class="srv-icon">☁️</span>T-облако</div>
+        <div class="service-card" onclick="openM('ttranslateModal')"><span class="srv-icon">🔤</span>T-переводчик</div>
+        <div class="service-card" onclick="openM('tspeedModal')"><span class="srv-icon">⚡</span>T-Скорость</div>
+        <div class="service-card" onclick="openM('tpassModal')"><span class="srv-icon">🔑</span>T-Пароль</div>
+    </div>
+
+    <!-- ВСТРОЕННЫЙ ИИ НА ГЛАВНОЙ -->
+    <div class="panel" id="aiPanel">
+        <h3 style="margin-top:0; color:var(--blue);" id="aiTitle">🤖 Встроенный ИИ TIKYA AI</h3>
+        <div class="chat-box" id="aiBox"><strong>ИИ:</strong> Привет! Я твой встроенный ИИ. Спроси меня про Диму, ТикТок или наши новые сервисы!</div>
+        <div style="display:flex; gap:6px;">
+            <input type="text" id="aiInput" style="flex:1; padding:11px; border-radius:10px; border:1px solid #232335; background:var(--bg); color:white; outline:none;" placeholder="Задай вопрос ИИ..."><button class="btn btn-blue" onclick="sendAi()">Спросить</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    <div class="overlay" id="regModal"><div class="modal"><span class="close" onclick="closeM('regModal')">&times;</span><h3>🔑 Создать профиль TIKYA</h3><form class="form" onsubmit="submitReg(event)"><input type="text" id="regName" placeholder="Твой никнейм" required><input type="email" placeholder="Email" required><input type="password" placeholder="Пароль" required><button class="btn btn-green" type="submit">Создать аккаунт</button></form></div></div>
+    
+    <div class="overlay" id="settingsModal"><div class="modal"><span class="close" onclick="closeM('settingsModal')">&times;</span><h3 style="margin-top:0;">⚙️ Настройки и Промокод</h3><p style="font-size:14px; color:var(--text-gray);">Введи промокод холдинга TIKYA:</p><div class="form" style="flex-direction:row; gap:6px; margin-bottom:15px;"><input type="text" id="promoInput" placeholder="Например: DIMA228"><button class="btn btn-blue" style="background:#f5b041; color:#000;" onclick="checkPromo()">ОК</button></div><p id="promoStatus" style="font-size:13px; font-weight:bold;"></p><hr style="border-color:#232335; margin:15px 0;"><h3>🛠️ Поддержка</h3><div class="chat-box" id="supBox" style="height:70px; margin-top:10px;"><strong>Агент:</strong> Привет! Что случилось? Мы поможем.</div><div class="form" style="flex-direction:row; gap:6px;"><input type="text" id="supInput" placeholder="Вопрос..."><button class="btn btn-blue" onclick="sendSup()">ОК</button></div></div></div>
+    
+    <div class="overlay" id="tmailModal"><div class="modal"><span class="close" onclick="closeM('tmailModal')">&times;</span><h3 style="color:var(--red); margin-top:0;">📬 Tmail Messenger</h3><form class="form" onsubmit="submitMail(event)"><input type="email" placeholder="Кому (Email)" required><textarea placeholder="Текст сообщения..." style="height:60px; resize:none;" required></textarea><button class="btn btn-red" type="submit">Отправить</button></form></div></div>
+    
+    <!-- ОКНО: ОБЛАКО -->
+    <div class="overlay" id="tcloudModal"><div class="modal"><span class="close" onclick="closeM('tcloudModal')">&times;</span><h3 style="color:var(--blue); margin-top:0;">☁️ T-облако TIKYA</h3><p style="font-size:13px; color:var(--text-gray);">Загружай файлы в хранилище:</p><div class="form"><input type="file" id="cloudFileInput"><button class="btn btn-blue" onclick="handleCloudUpload()">Загрузить</button></div></div></div>
+    
+    <!-- ОКНО: ПЕРЕВОДЧИК -->
+    <div class="overlay" id="settingsModal"><div class="modal"><span class="close" onclick="closeM('settingsModal')">&times;</span><h3 style="margin-top:0;">⚙️ Настройки и Промокод</h3><p style="font-size:14px; color:var(--text-gray);">Введи промокод холдинга TIKYA:</p><div class="form" style="flex-direction:row; gap:6px; margin-bottom:15px;"><input type="text" id="promoInput" placeholder="Например: DIMA228"><button class="btn btn-blue" style="background:#f5b041; color:#000;" onclick="checkPromo()">ОК</button></div><p id="promoStatus" style="font-size:13px; font-weight:bold;"></p><hr style="border-color:#232335; margin:15px 0;"><h3>🛠️ Поддержка</h3><div class="chat-box" id="supBox" style="height:70px; margin-top:10px;"><strong>Агент:</strong> Привет! Что случилось? Мы поможем.</div><div class="form" style="flex-direction:row; gap:6px;"><input type="text" id="supInput" placeholder="Вопрос..."><button class="btn btn-blue" onclick="sendSup()">ОК</button></div></div></div>
+    
+    <div class="overlay" id="tmailModal"><div class="modal"><span class="close" onclick="closeM('tmailModal')">&times;</span><h3 style="color:var(--red); margin-top:0;">📬 Tmail Messenger</h3><form class="form" onsubmit="submitMail(event)"><input type="email" placeholder="Кому (Email)" required><textarea placeholder="Текст сообщения..." style="height:60px; resize:none;" required></textarea><button class="btn btn-red" type="submit">Отправить</button></form></div></div>
+    
+    <!-- ОКНО: ОБЛАКО -->
+    <div class="overlay" id="tcloudModal"><div class="modal"><span class="close" onclick="closeM('tcloudModal')">&times;</span><h3 style="color:var(--blue); margin-top:0;">☁️ T-облако TIKYA</h3><p style="font-size:13px; color:var(--text-gray);">Загружай файлы в хранилище:</p><div class="form"><input type="file" id="cloudFileInput"><button class="btn btn-blue" onclick="handleCloudUpload()">Загрузить</button></div></div></div>
+    
+    <!-- ОКНО: ПЕРЕВОДЧИК -->
+    <div class="overlay" id="ttranslateModal"><div class="modal"><span class="close" onclick="closeM('ttranslateModal')">&times;</span><h3 style="color:var(--green); margin-top:0;">🔤 T-переводчик</h3><div class="form"><input type="text" id="transInput" placeholder="Введите фразу (привет или разработчик)..."><button class="btn btn-green" onclick="runTranslate()">Перевести</button><div id="transOutput" style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px; text-align:left;"></div></div></div></div>
+
+    <!-- ОКНО: СКОРОСТЬ -->
+    <div class="overlay" id="tspeedModal">
+        <div class="modal">
+            <span class="close" onclick="closeM('tspeedModal')">&times;</span>
+            <h3 style="color:var(--green); margin-top:0;">⚡ T-Скорость</h3>
+            <p style="font-size:13px; color:var(--text-gray);">Измерение скорости Wi-Fi соединения</p>
+            <div class="speed-display" id="speedDisplay">0.00 <span style="font-size:16px;">Мбит/с</span></div>
+            <div class="speed-progress" id="speedProgress"><div class="speed-bar" id="speedBar"></div></div>
+            <button class="btn btn-green" id="startSpeedBtn" onclick="runSpeedTest()">Запустить тест</button>
+        </div>
+    </div>
+
+    <!-- ОКНО: ПАРОЛИ -->
+    <div class="overlay" id="tpassModal">
+        <div class="modal">
+            <span class="close" onclick="closeM('tpassModal')">&times;</span>
+            <h3 style="color:var(--blue); margin-top:0;">🔑 T-Пароль Generator</h3>
+            <div class="form">
+                <div style="text-align: left; font-size: 14px;">
+                    Длина: <input type="number" id="passLength" value="12" min="4" max="64" style="width:60px; display:inline-block; padding:5px; background:var(--bg); border:1px solid #232335; color:white; border-radius:5px;">
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" id="passDigits" checked> Включать цифры (0-9)</label>
+                    <label class="checkbox-label"><input type="checkbox" id="passSpecial" checked> Включать спецсимволы (!@#$%)</label>
+                </div>
+                <button class="btn btn-blue" onclick="generateSecurePassword()">Создать пароль</button>
+                <input type="text" id="passOutput" placeholder="Ваш безопасный пароль" readonly style="text-align:center; margin-top:10px; font-weight:bold; font-family:monospace; background: #232335;">
+            </div>
+        </div>
+    </div>
+
+    <!-- ТА САМАЯ СВЯЗЬ С СКРИПТОМ SCRIPT.JS -->
+    <script src="script.js"></script>
+</body>
+</html>
